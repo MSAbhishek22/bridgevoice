@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BridgeVoice — Har notice, simple shabdon mein</title>
+<meta name="description" content="Paste any bank letter, hospital note or government notice — English or Hindi — and BridgeVoice returns it in plain simple language, reads it aloud, and pulls out the dates, amounts and phone numbers that matter.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <svg class="logo" viewBox="0 0 48 48" aria-hidden="true"><path d="M4 34 Q24 8 44 34" fill="none" stroke="#C8402A" stroke-width="4" stroke-linecap="round"/><line x1="12" y1="27" x2="12" y2="38" stroke="#191410" stroke-width="3" stroke-linecap="round"/><line x1="24" y1="20" x2="24" y2="38" stroke="#191410" stroke-width="3" stroke-linecap="round"/><line x1="36" y1="27" x2="36" y2="38" stroke="#191410" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="40" r="2.6" fill="#E9A13B"/></svg>
+    <span class="wordmark">Bridge<em>Voice</em></span>
+  </div>
+  <span class="topbar-tag">For everyone a notice has ever confused</span>
+</header>
+
+<section class="hero">
+  <h1>Every notice,<br>in words you <span class="hl">actually understand.</span></h1>
+  <p class="hero-sub">Bank letters, hospital notes and government notices are written in hard, official language. Paste one here — English or Hindi — and BridgeVoice gives it back in plain, simple words, reads it aloud, and pulls out the <strong>dates, amounts and phone numbers</strong> that actually matter.</p>
+</section>
+
+<main class="grid">
+  <section class="panel input-panel">
+    <p class="step-label">01 · Paste the notice</p>
+    <div class="samples">
+      <span class="samples-label">Try a sample:</span>
+      <button class="chip" data-sample="0" type="button">🏦 Bank KYC letter</button>
+      <button class="chip" data-sample="1" type="button">🏥 Hospital discharge note</button>
+      <button class="chip" data-sample="2" type="button">💡 बिजली बिल चेतावनी</button>
+    </div>
+    <label class="sr" for="noticeInput">Notice text</label>
+    <textarea id="noticeInput" rows="11" placeholder="Paste or type the notice here… (English ya Hindi, dono chalega)"></textarea>
+    <div class="input-actions">
+      <button id="simplifyBtn" class="btn primary" type="button">Simple bana do · Simplify</button>
+      <button id="clearBtn" class="btn ghost" type="button">Clear</button>
+    </div>
+    <p class="privacy-note">🔒 Your text never leaves this page. No server, no AI, no tracking — the word list lives in the page itself.</p>
+  </section>
+
+  <section class="output-col">
+    <div class="panel">
+      <div class="out-head">
+        <p class="step-label">02 · Simple words</p>
+        <div class="out-controls">
+          <label class="toggle"><input type="checkbox" id="bigToggle"> <span>Big text</span></label>
+          <button id="speakBtn" class="btn small" type="button">🔊 Suno · Listen</button>
+          <button id="stopBtn" class="btn small ghost" type="button">Stop</button>
+          <button id="copyBtn" class="btn small ghost" type="button">Copy</button>
+        </div>
+      </div>
+      <div id="simpleOut" class="simple-text" aria-live="polite"></div>
+    </div>
+
+    <div class="panel">
+      <p class="step-label">03 · Zaroori baatein · The important bits</p>
+      <div id="cards" class="cards"></div>
+      <p id="cardsEmpty" class="empty-note">No dates, amounts or phone numbers found yet — paste a notice and press Simplify.</p>
+    </div>
+  </section>
+</main>
+
+<section class="limits">
+  <h2>Honest limits</h2>
+  <ul>
+    <li><strong>BridgeVoice only simplifies the wording.</strong> It does not and cannot check whether a notice is genuine.</li>
+    <li><strong>Never share an OTP, password or PIN</strong> — no real bank or office ever asks for one. If a notice does, treat it as a scam, however simple it sounds.</li>
+    <li>This is <strong>not legal or medical advice</strong>. For a decision that matters, confirm with the office, bank or doctor directly — the phone numbers above are a good place to start.</li>
+    <li>The word list is written by hand, so a few hard words may remain. The meaning is never changed on purpose: unknown sentences are shown as they are.</li>
+  </ul>
+</section>
+
+<footer>
+  <p>Built fresh on 18 Nov 2026 for <strong>Bridge The Gap Hacks</strong> · Works fully in your browser, even offline · English + Hindi</p>
+</footer>
+
+<script src="engine.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
