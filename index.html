@@ -6,6 +6,14 @@
 <title>BridgeVoice — Har notice, simple shabdon mein</title>
 <meta name="description" content="Paste any bank letter, hospital note or government notice — English or Hindi — and BridgeVoice returns it in plain simple language, reads it aloud, and pulls out the dates, amounts and phone numbers that matter.">
 <link rel="stylesheet" href="styles.css">
+<style>
+.hero3d-wrap{position:relative;height:340px;min-height:260px;overflow:hidden;background:#0b1020;border-radius:18px;margin:18px auto;max-width:1100px}
+.hero3d-wrap canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero3d-cap{position:absolute;left:18px;bottom:36px;margin:0;color:#fff;font:600 14px/1.4 system-ui,-apple-system,sans-serif;text-shadow:0 1px 8px rgba(0,0,0,.65);z-index:2}
+.hero3d-cue{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);margin:0;color:rgba(255,255,255,.92);font:600 13px/1.4 system-ui,-apple-system,sans-serif;letter-spacing:.08em;text-transform:uppercase;z-index:2;animation:hero3dbob 2s ease-in-out infinite}
+@keyframes hero3dbob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,4px)}}
+@media(max-width:640px){.hero3d-wrap{height:280px;margin:12px}}
+</style>
 </head>
 <body>
 <header class="topbar">
@@ -19,6 +27,62 @@
 <section class="hero">
   <h1>Every notice,<br>in words you <span class="hl">actually understand.</span></h1>
   <p class="hero-sub">Bank letters, hospital notes and government notices are written in hard, official language. Paste one here — English or Hindi — and BridgeVoice gives it back in plain, simple words, reads it aloud, and pulls out the <strong>dates, amounts and phone numbers</strong> that actually matter.</p>
+
+<section class="hero3d-wrap" aria-label="3D scene — Hard words, softened — the shape of a notice, in sound.">
+  <canvas id="hero3d" aria-hidden="true"></canvas>
+  <p class="hero3d-cap">Hard words, softened — the shape of a notice, in sound.</p>
+  <p class="hero3d-cue">&#8595; Scroll to explore</p>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js"></script>
+<script>
+/* J8 hero 3D — auto-starts on first load, no click needed. Three.js r149 CDN
+   with unpkg fallback. Pauses off-screen; renders one static frame when the
+   user prefers reduced motion. */
+(function(){
+  var canvas = document.getElementById('hero3d'); if(!canvas) return;
+  function start(){
+    if(!window.THREE){
+      var s = document.createElement('script');
+      s.src = 'https://unpkg.com/three@0.149.0/build/three.min.js';
+      s.onload = start; document.head.appendChild(s); return;
+    }
+    var THREE = window.THREE;
+    var wrap = canvas.parentElement;
+    var renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true});
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    var scene = new THREE.Scene(); scene.background = new THREE.Color(0x241612);
+    var camera = new THREE.PerspectiveCamera(45, 2, 0.1, 100);
+    camera.position.set(0, 1.0, 10);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.75));
+    var dl = new THREE.DirectionalLight(0xffffff, 0.9); dl.position.set(4, 6, 6); scene.add(dl);
+    var dl2 = new THREE.DirectionalLight(0xffffff, 0.35); dl2.position.set(-5, -2, 4); scene.add(dl2);
+    var bars = [];
+    var cols = [0xc8402a, 0xe9a13b, 0x2f6f6a];
+    for(var i=0;i<26;i++){
+      var b = new THREE.Mesh(new THREE.BoxGeometry(0.3, 1, 0.3),
+        new THREE.MeshStandardMaterial({color: cols[i%3], roughness: 0.6}));
+      b.position.set((i-12.5)*0.62, 0, 0);
+      b.scale.y = 1; scene.add(b); bars.push(b);
+    }
+
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var visible = true;
+    function size(){ var w=wrap.clientWidth, h=wrap.clientHeight; if(!w||!h) return;
+      renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix(); }
+    size(); window.addEventListener('resize', size);
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(en){ visible = en[0].isIntersecting; }, {threshold: 0}).observe(wrap);
+    }
+    var clock = new THREE.Clock();
+    function tick(t){ bars.forEach(function(b, i){ var h = 0.5 + Math.abs(Math.sin(t*2.1 + i*0.55))*2.4;
+      b.scale.y = h; b.position.y = h/2 - 1.4; }); }
+    function frame(){ requestAnimationFrame(frame); if(!visible) return; tick(clock.getElapsedTime()); renderer.render(scene, camera); }
+    if(reduced){ tick(0.6); renderer.render(scene, camera); } else { frame(); }
+  }
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', start); }
+  else { start(); }
+})();
+</script>
 </section>
 
 <main class="grid">
